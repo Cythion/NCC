@@ -19,7 +19,7 @@ def zProjection(z_stack):
     return avg_projection
 
 def subBackground(z_projection):
-    background = restoration.rolling_ball(z_projection, radius=50)
+    background = restoration.rolling_ball(z_projection, radius=50, nansafe=True)
     clean_image = z_projection - background
     return clean_image
 
@@ -29,8 +29,9 @@ for index in samples:
     output_sample = output_path + index[:-4] + ".tif"
     z_stack = io.imread(path + index)
     avg_projection = zProjection(z_stack)
-    backgrd_cleaned = subBackground(avg_projection)
-    io.imsave(output_sample, backgrd_cleaned)
+    denoised = restoration.denoise_nl_means(avg_projection)
+    cleaned_img = subBackground(denoised)
+    io.imsave(output_sample, cleaned_img)
 
 
 # z_stack = io.imread(path + "WT-RAP-1_w1confGFP.stk")
