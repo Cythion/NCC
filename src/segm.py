@@ -10,18 +10,17 @@ model = models.CellposeModel(
         diam_mean=10,
         )
 
-
-path = "/home/cyril/Documents/Programs/NCC/samples/bright/"
-save = "/home/cyril/Documents/Programs/NCC/output/"
+path = "/home/cyril/Documents/Programs/NCC/samples/snrk1/bright/"
+save = "/home/cyril/Documents/Programs/NCC/output/snrk1/"
 samples = listdir(path)
 num_images = len(samples)
-index = 1
+current_sample = 1
 
 for index in samples:
     img = imread(path + index)
-    print(f'Processing sample {index}/{num_images}: {index}')
+    print(f'Processing sample {current_sample}/{num_images}: {index}')
 
     save_path = save + index[:-4] + "_mask.tif"
     masks, flows, styles  = model.eval(img, flow_threshold=0.4, cellprob_threshold=0.0)
     imsave(save_path, masks)
-    index += 1
+    current_sample += 1
