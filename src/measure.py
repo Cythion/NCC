@@ -136,4 +136,4 @@ for mut in MUTANTS:
         temp_dataframe [(f'{cond}',f'{mut}')] = data
         data_frame = pd.concat([data_frame, temp_dataframe], ignore_index=True)
 
-data_frame.to_csv("snrk1Summary.csv")
+data_frame.to_csv(EXPORT_PATH + "snrk1Summary.csv")
